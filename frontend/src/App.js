@@ -1,6 +1,9 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Container, Row, Col } from "react-bootstrap";
 import CreatePlaylistPage from "./pages/createPlaylist";
+import LanguageSelector from "./LanguageSelector";
 
 function App() {
   const CLIENT_ID = "08d52968d40a4cb999ddd47d784b5ac5";
@@ -32,23 +35,33 @@ function App() {
     window.sessionStorage.clear();
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Spotify React</h1>
-        {!token ? (
-          <a
-            href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
-          >
-            Login to Spotify
-          </a>
-        ) : (
-          <>
-            <CreatePlaylistPage></CreatePlaylistPage>
-            <button onClick={logout}>Logout</button>
-          </>
-        )}
-      </header>
+      <Container>
+        <Row>
+          <Col>
+            <header className="App-header">
+              <LanguageSelector />
+
+              <h1>{t("home.welcome")}</h1>
+              {!token ? (
+                <a
+                  href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
+                >
+                  Login to Spotify
+                </a>
+              ) : (
+                <>
+                  <CreatePlaylistPage />
+                  <button onClick={logout}>{t("home.logout")}</button>
+                </>
+              )}
+            </header>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
