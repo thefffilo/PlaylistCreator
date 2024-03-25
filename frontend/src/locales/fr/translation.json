@@ -1,0 +1,15 @@
+{
+  "home": {
+    "welcome": "Bienvenue sur Spotify React !",
+    "login": "Se connecter à Spotify",
+    "logout": "Déconnexion"
+  },
+  "createPlaylist": {
+    "insertYourTextHere": "Insérez votre texte ici...",
+    "reset": "Réinitialiser",
+    "send": "Envoyer",
+    "foundGenres": "Nous avons trouvé ces genres dans votre phrase :",
+    "remove": "Supprimer",
+    "createPlaylist": "Créer une playlist"
+  }
+}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import apiClient from "../api/axios";
-
+import { useTranslation } from "react-i18next";
 function CreatePlaylistPage() {
+  const { t } = useTranslation();
   const [text, setText] = useState("");
   const [genresFound, setGenresFound] = useState([]);
 
@@ -41,30 +42,32 @@ function CreatePlaylistPage() {
           boxSizing: "border-box"
         }}
         rows="4"
-        placeholder="Inserisci il tuo testo qui..."
+        placeholder={t("createPlaylist.insertYourTextHere")}
       />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <button
           onClick={handleReset}
           style={{ padding: "10px 20px", cursor: "pointer" }}
         >
-          Reset
+          {t("createPlaylist.reset")}
         </button>
         <button
           onClick={handleSend}
           style={{ padding: "10px 20px", cursor: "pointer" }}
         >
-          Invia
+          {t("createPlaylist.send")}
         </button>
       </div>
       {genresFound.length > 0 && (
         <div>
-          <p>We have found these genres in your phrase:</p>
+          <p>{t("createPlaylist.foundGenres")}:</p>
           <ul style={{ listStyle: "none", padding: 0 }}>
             {genresFound.map((genre, index) => (
               <li key={index} style={{ marginBottom: "5px" }}>
                 <span style={{ marginRight: "10px" }}>{genre}</span>
-                <button onClick={() => handleRemoveGenre(index)}>Remove</button>
+                <button onClick={() => handleRemoveGenre(index)}>
+                  {t("createPlaylist.remove")}
+                </button>
               </li>
             ))}
           </ul>
@@ -76,7 +79,7 @@ function CreatePlaylistPage() {
               marginTop: "10px"
             }}
           >
-            Create a playlist
+            {t("createPlaylist.createPlaylist")}
           </button>
         </div>
       )}
