@@ -1,14 +1,15 @@
 .App {
   text-align: center;
+  background-color: #1db954;
+  color: #fff;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #000;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,4 +21,27 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.title-label {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.box {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #000; /* Testo nero all'interno della box */
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.button-container button {
+  margin-right: 10px;
 }

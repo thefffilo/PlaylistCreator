@@ -1,15 +1,17 @@
 {
-  "home": {
-    "welcome": "¡Bienvenido a Spotify React!",
-    "login": "Iniciar sesión en Spotify",
-    "logout": "Cerrar sesión"
-  },
   "createPlaylist": {
-    "insertYourTextHere": "Inserta tu texto aquí...",
-    "reset": "Restablecer",
-    "send": "Enviar",
+    "createPlaylist": "Crear una lista de reproducción",
     "foundGenres": "Hemos encontrado estos géneros en tu frase:",
+    "insertYourTextHere": "Inserta tu texto aquí...",
     "remove": "Eliminar",
-    "createPlaylist": "Crear una lista de reproducción"
+    "reset": "Reiniciar",
+    "send": "Enviar"
+  },
+  "home": {
+    "extract": "Extraer Géneros de Canciones",
+    "login": "Iniciar sesión en Spotify",
+    "logout": "Cerrar sesión",
+    "playlist": "Crear Lista de Reproducción",
+    "welcome": "¡Bienvenido a Spotify React!"
   }
 }
