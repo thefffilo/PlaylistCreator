@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #1db954;
   color: #fff;
 }
 .App-logo {
@@ -35,7 +34,7 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  color: #000; /* Testo nero all'interno della box */
+  color: #000;
 }
 
 .button-container {
@@ -44,4 +43,10 @@
 
 .button-container button {
   margin-right: 10px;
+}
+
+.language-selector {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

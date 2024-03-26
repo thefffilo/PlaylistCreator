@@ -45,7 +45,9 @@ function App() {
         <Row className="justify-content-center align-items-center">
           <Col>
             <header className="App-header">
-              <LanguageSelector />
+              <div className="language-selector">
+                <LanguageSelector className="language-selector" />
+              </div>
               <h1>{t("home.welcome")}</h1>
               <div className="box">
                 <div>
