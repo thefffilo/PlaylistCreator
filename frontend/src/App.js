@@ -7,7 +7,7 @@ import LanguageSelector from "./LanguageSelector";
 
 function App() {
   const CLIENT_ID = "08d52968d40a4cb999ddd47d784b5ac5";
-  const REDIRECT_URI = window.location.href.replace(/\/$/, "");
+  const REDIRECT_URI = window.location.href;
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
 
