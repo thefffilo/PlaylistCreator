@@ -10,7 +10,7 @@
   "home": {
     "extract": "Extract Song Genres",
     "login": "Login to Spotify",
-    "logout": "Loogut",
+    "logout": "Logout",
     "playlist": "Create Playlist",
     "welcome": "Welcome to Spotify React!"
   }

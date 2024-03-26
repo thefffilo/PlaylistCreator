@@ -36,9 +36,30 @@ const ExtractInfo = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        marginTop: "20px"
+      }}
+    >
       <input type="file" accept="audio/*" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Conferma</button>
+      <button
+        onClick={handleUpload}
+        style={{
+          padding: "10px",
+          cursor: "pointer",
+          color: selectedFile ? "black" : "gray",
+          width: "fit-content",
+          margin: "10px auto",
+          border: "1px solid",
+          borderRadius: "5px"
+        }}
+        disabled={!selectedFile}
+      >
+        Conferma
+      </button>
     </div>
   );
 };

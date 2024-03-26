@@ -52,14 +52,21 @@ function App() {
               <div className="box">
                 <div>
                   <span
-                    style={{ cursor: "pointer", marginRight: "10px" }}
+                    style={{
+                      cursor: "pointer",
+                      marginRight: "10px",
+                      fontWeight: selectedTab === "playlist" ? "bold" : "normal"
+                    }}
                     onClick={() => setSelectedTab("playlist")}
                     className="title-label"
                   >
                     {t("home.playlist")}
                   </span>
                   <span
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      cursor: "pointer",
+                      fontWeight: selectedTab === "extract" ? "bold" : "normal"
+                    }}
                     onClick={() => setSelectedTab("extract")}
                     className="title-label"
                   >
@@ -69,23 +76,37 @@ function App() {
                 {selectedTab === "playlist" && (
                   <>
                     {!token ? (
-                      <a
-                        href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          marginTop: "20px"
+                        }}
                       >
-                        {t("home.login")}
-                      </a>
+                        <a
+                          href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
+                        >
+                          {t("home.login")}
+                        </a>
+                      </div>
                     ) : (
                       <CreatePlaylistPage />
                     )}
                   </>
                 )}
                 {selectedTab === "extract" && <ExtractInfo />}
-                {token && (
-                  <div className="button-container">
-                    <button onClick={logout}>{t("home.logout")}</button>
-                  </div>
-                )}
               </div>
+              {token && (
+                <div
+                  style={{
+                    color: "white",
+                    padding: "10px",
+                    height: "fit-content"
+                  }}
+                >
+                  <button onClick={logout}>{t("home.logout")}</button>
+                </div>
+              )}
             </header>
           </Col>
         </Row>
