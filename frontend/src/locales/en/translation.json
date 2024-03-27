@@ -7,6 +7,9 @@
     "reset": "Reset",
     "send": "Send"
   },
+  "extractInfo": {
+    "confirm": "Confirm"
+  },
   "home": {
     "extract": "Extract Song Genres",
     "login": "Login to Spotify",

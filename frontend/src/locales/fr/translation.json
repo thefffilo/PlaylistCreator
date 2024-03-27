@@ -7,6 +7,9 @@
     "reset": "Réinitialiser",
     "send": "Envoyer"
   },
+  "extractInfo": {
+    "confirm": "Confirmer"
+  },
   "home": {
     "extract": "Extraire les genres de chansons",
     "login": "Connexion à Spotify",

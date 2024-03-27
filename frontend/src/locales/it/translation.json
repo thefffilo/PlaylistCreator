@@ -7,6 +7,9 @@
     "reset": "Resetta",
     "send": "Invia"
   },
+  "extractInfo": {
+    "confirm": "Conferma"
+  },
   "home": {
     "extract": "Estrai i generi delle canzoni",
     "login": "Accedi a Spotify",

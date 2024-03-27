@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const ExtractInfo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const { t } = useTranslation();
 
   const handleFileChange = event => {
     const file = event.target.files[0];
-    // Verifica se il file è un audio
     if (file?.type.startsWith("audio/")) {
       setSelectedFile(file);
     } else {
@@ -58,7 +59,7 @@ const ExtractInfo = () => {
         }}
         disabled={!selectedFile}
       >
-        Conferma
+        {t("extractInfo.confirm")}
       </button>
     </div>
   );

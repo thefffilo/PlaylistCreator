@@ -7,6 +7,9 @@
     "reset": "Reiniciar",
     "send": "Enviar"
   },
+  "extractInfo": {
+    "confirm": "Confirmar"
+  },
   "home": {
     "extract": "Extraer Géneros de Canciones",
     "login": "Iniciar sesión en Spotify",
