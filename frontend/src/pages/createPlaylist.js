@@ -8,7 +8,7 @@ function CreatePlaylistPage() {
 
   const handleSend = async () => {
     try {
-      const response = await apiClient.post("/api/sendText", { text });
+      const response = await apiClient.post("/sendText", { text });
       if (response.data.genres && Array.isArray(response.data.genres)) {
         setGenresFound(response.data.genres);
       }
