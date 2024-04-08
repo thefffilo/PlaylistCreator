@@ -4,13 +4,15 @@ import { Container, Row, Col } from "react-bootstrap";
 import CreatePlaylistPage from "./pages/createPlaylist";
 import ExtractInfo from "./pages/extractInfo";
 import LanguageSelector from "./LanguageSelector";
-import "./App.css"; // Importa il foglio di stile CSS
+import "./App.css";
 
 function App() {
   const CLIENT_ID = "08d52968d40a4cb999ddd47d784b5ac5";
   const REDIRECT_URI = window.location.href;
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
+  const SCOPE =
+    "user-read-private%20playlist-read-private%20playlist-modify-public%20app-remote-control%20user-library-read%20user-read-playback-state%20user-read-recently-played%20user-top-read";
 
   const [token, setToken] = useState("");
   const [selectedTab, setSelectedTab] = useState("playlist");
@@ -84,7 +86,7 @@ function App() {
                         }}
                       >
                         <a
-                          href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}`}
+                          href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`}
                         >
                           {t("home.login")}
                         </a>
