@@ -1,6 +1,57 @@
 import { useState } from "react";
 import apiClient from "../api/axios";
 import { useTranslation } from "react-i18next";
+
+async function fetchWebApi(endpoint, method, body) {
+  const token = sessionStorage.getItem("token");
+  console.log("endpoint", endpoint);
+  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    method,
+    body: JSON.stringify(body)
+  });
+  return await res.json();
+}
+
+async function getTopTracks() {
+  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
+  return (
+    await fetchWebApi("v1/me/top/tracks?time_range=long_term&limit=5", "GET")
+  ).items;
+}
+
+// const tracksUri = [
+//   "spotify:track:5SFCEkybGYmmzKqewtDEaN",
+//   "spotify:track:4Fqm5rqB0WMx0hPOwgRjFr",
+//   "spotify:track:5w9upngVRHNjdZcRC7Xxr2",
+//   "spotify:track:25jTLospI6eYVZ5TDDQN7V",
+//   "spotify:track:0iB5f04XdJ2tcfhoVkeLV8",
+//   "spotify:track:4obJRBmV1AnO09jj03zIqk",
+//   "spotify:track:1CtKHwDqsH3ctcCCI18N0g",
+//   "spotify:track:0LMwmV37RCmBO2so0szAFs",
+//   "spotify:track:4yhGkvdYU5bi4950r80FRo",
+//   "spotify:track:1pFqJGm5J5GlWOYmEUee30"
+// ];
+
+async function createPlaylist(tracksUri) {
+  const { id: user_id } = await fetchWebApi("v1/me", "GET");
+
+  const playlist = await fetchWebApi(`v1/users/${user_id}/playlists`, "POST", {
+    name: "PlaylistDel",
+    description: "Playlist created by the tutorial on developer.spotify.com",
+    public: false
+  });
+
+  await fetchWebApi(
+    `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(",")}`,
+    "POST"
+  );
+
+  return playlist;
+}
+
 function CreatePlaylistPage() {
   const { t } = useTranslation();
   const [text, setText] = useState("");
@@ -8,10 +59,15 @@ function CreatePlaylistPage() {
 
   const handleSend = async () => {
     try {
-      const response = await apiClient.post("/sendText", { text });
-      if (response.data.genres && Array.isArray(response.data.genres)) {
-        setGenresFound(response.data.genres);
-      }
+      // const response = await apiClient.post("/sendText", { text });
+      // if (response.data.genres && Array.isArray(response.data.genres)) {
+      //   setGenresFound(response.data.genres);
+      // }
+
+      const topTracks = await getTopTracks();
+
+      const tracksUri = topTracks.map(track => track.uri);
+      createPlaylist(tracksUri);
     } catch (error) {
       console.error(error);
     }
