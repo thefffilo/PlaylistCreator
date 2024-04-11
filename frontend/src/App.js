@@ -13,7 +13,7 @@ function App() {
   const RESPONSE_TYPE = "token";
   const SCOPE =
     // "user-read-private%20playlist-read-private%20playlist-modify-public%20app-remote-control%20user-library-read%20user-read-playback-state%20user-read-recently-played%20user-top-read";
-    "user-top-read%20playlist-modify-private";
+    "user-top-read%20playlist-modify-private%20user-library-read";
 
   const [token, setToken] = useState("");
   const [selectedTab, setSelectedTab] = useState("playlist");

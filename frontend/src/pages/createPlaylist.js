@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import apiClient from "../api/axios";
 import { useTranslation } from "react-i18next";
 
@@ -15,59 +15,22 @@ async function fetchWebApi(endpoint, method, body) {
   return await res.json();
 }
 
-async function getTopTracks() {
-  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
-  return (
-    await fetchWebApi("v1/me/top/tracks?time_range=long_term&limit=5", "GET")
-  ).items;
-}
-
-// const tracksUri = [
-//   "spotify:track:5SFCEkybGYmmzKqewtDEaN",
-//   "spotify:track:4Fqm5rqB0WMx0hPOwgRjFr",
-//   "spotify:track:5w9upngVRHNjdZcRC7Xxr2",
-//   "spotify:track:25jTLospI6eYVZ5TDDQN7V",
-//   "spotify:track:0iB5f04XdJ2tcfhoVkeLV8",
-//   "spotify:track:4obJRBmV1AnO09jj03zIqk",
-//   "spotify:track:1CtKHwDqsH3ctcCCI18N0g",
-//   "spotify:track:0LMwmV37RCmBO2so0szAFs",
-//   "spotify:track:4yhGkvdYU5bi4950r80FRo",
-//   "spotify:track:1pFqJGm5J5GlWOYmEUee30"
-// ];
-
-async function createPlaylist(tracksUri) {
-  const { id: user_id } = await fetchWebApi("v1/me", "GET");
-
-  const playlist = await fetchWebApi(`v1/users/${user_id}/playlists`, "POST", {
-    name: "PlaylistDel",
-    description: "Playlist created by the tutorial on developer.spotify.com",
-    public: false
-  });
-
-  await fetchWebApi(
-    `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(",")}`,
-    "POST"
-  );
-
-  return playlist;
-}
-
 function CreatePlaylistPage() {
+  const [spuser, setSpuser] = useState({});
   const { t } = useTranslation();
   const [text, setText] = useState("");
-  const [genresFound, setGenresFound] = useState([]);
+  const [genresFound, setGenresFound] = useState(["rock", "pop", "indie"]);
 
   const handleSend = async () => {
     try {
-      // const response = await apiClient.post("/sendText", { text });
-      // if (response.data.genres && Array.isArray(response.data.genres)) {
+      // const response = await apiClient.post("/genres", { text });
+      // if (
+      //   response.ok &&
+      //   response.data.genres &&
+      //   Array.isArray(response.data.genres)
+      // ) {
       //   setGenresFound(response.data.genres);
       // }
-
-      const topTracks = await getTopTracks();
-
-      const tracksUri = topTracks.map(track => track.uri);
-      createPlaylist(tracksUri);
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +47,109 @@ function CreatePlaylistPage() {
     setGenresFound(updatedGenres);
   };
 
-  const handleCreatePlaylist = () => {};
+  // const handleCreatePlaylist = async () => {
+  //   const topTracks = await fetchWebApi(
+  //     "v1/me/top/tracks?time_range=long_term&limit=25",
+  //     "GET"
+  //   );
+
+  //   if (!topTracks.items) {
+  //     return;
+  //   }
+
+  //   const tracksUri = topTracks.items.map(track => track.uri);
+
+  //   const playlist = await fetchWebApi(
+  //     `v1/users/${spuser.id}/playlists`,
+  //     "POST",
+  //     {
+  //       name: "Playlist Creator",
+  //       description: "Playlist creata da Playlist Creator. :)",
+  //       public: false
+  //     }
+  //   );
+
+  //   await fetchWebApi(
+  //     `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(",")}`,
+  //     "POST"
+  //   );
+  // };
+
+  const handleCreatePlaylist = async () => {
+    try {
+      // Recupera i brani raccomandati e piaciuti
+      const recommendedTracks = await fetchWebApi(
+        "v1/me/top/tracks?time_range=short_term&limit=50",
+        "GET"
+      );
+      const likedTracks = await fetchWebApi(
+        "v1/me/tracks?market=IT&limit=50&offset=0",
+        "GET"
+      );
+
+      if (!recommendedTracks.items || !likedTracks.items) {
+        console.log(
+          "Errore durante il recupero dei brani raccomandati e piaciuti."
+        );
+        return;
+      }
+
+      // Combina i brani raccomandati e piaciuti in un unico array e filtra per genere
+      const allTracks = [...recommendedTracks.items, ...likedTracks.items];
+      console.log("allTracks", allTracks);
+
+      const genreFilteredTracks = allTracks.filter(track =>
+        track.genres.some(genre => genresFound.includes(genre))
+      );
+
+      // Mappa le tracce filtrate per ottenere solo gli URI
+      const tracksUri = genreFilteredTracks.map(track => track.uri);
+
+      // Controlla se ci sono tracce da aggiungere
+      if (tracksUri.length === 0) {
+        console.log("Nessuna traccia corrisponde ai generi selezionati.");
+        return;
+      }
+
+      // Crea una nuova playlist
+      const playlist = await fetchWebApi(
+        `v1/users/${spuser.id}/playlists`,
+        "POST",
+        {
+          name: "Playlist Filtrata per Genere",
+          description:
+            "Playlist creata con brani raccomandati e piaciuti filtrati per genere.",
+          public: false
+        }
+      );
+
+      // Aggiungi le tracce filtrate alla playlist
+      await fetchWebApi(
+        `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(",")}`,
+        "POST"
+      );
+
+      console.log("Playlist creata con successo.");
+    } catch (error) {
+      console.error("Errore durante la creazione della playlist:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResult = await fetchWebApi("v1/me", "GET");
+
+        if (userResult) {
+          setSpuser(userResult);
+        }
+      } catch (error) {
+        console.error("Failed to fetch:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <div style={{ padding: "20px", maxWidth: "500px", margin: "auto" }}>
