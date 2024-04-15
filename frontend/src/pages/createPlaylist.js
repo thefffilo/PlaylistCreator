@@ -176,14 +176,11 @@ function CreatePlaylistPage() {
       );
 
       // Aggiungi le tracce filtrate alla playlist
-      // PUÒ AVERE MASSIMO 100 TRACCE QUINDI BISOGNA DIVIDERE IN DIVERSE RICHIESTE SE ABBIAMO MOLTI BRANI OPPURE TAGLIARLI
-      // SPOSTA LE TRACCE NEL BODY INVECE CHE NELLA QUERY, LA QUERY HA UNA LUNGHEZZA MASSIMA IL BODY NO
-      await fetchWebApi(
-        `v1/playlists/${playlist.id}/tracks?uris=${filteredTracksUri.join(
-          ","
-        )}`,
-        "POST"
-      );
+      // PUÒ CONTENERE MASSIMO 100 TRACCE
+      await fetchWebApi(`v1/playlists/${playlist.id}/tracks`, "POST", {
+        uris: filteredTracksUri.slice(0, 90),
+        position: 0
+      });
 
       console.log("Playlist creata con successo.");
     } catch (error) {
