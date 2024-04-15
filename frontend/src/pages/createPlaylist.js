@@ -82,18 +82,15 @@ function CreatePlaylistPage() {
   const handleCreatePlaylist = async () => {
     try {
       // Get brani raccomandati
-      // const recommendedTracks = await fetchWebApi(
-      //   "v1/me/top/tracks?time_range=short_term&limit=50",
-      //   "GET"
-      // );
+      const recommendedTracks = await fetchWebApi(
+        `v1/me/top/tracks?time_range=short_term&limit=50&min_popularity=70&genres=${genresFound.join(
+          ","
+        )}`,
+        "GET"
+      );
 
-      // Get brani piaciuti
-      // const likedTracks = await fetchWebApi(
-      //   "v1/me/tracks?market=IT&limit=50&offset=0",
-      //   "GET"
-      // );
+      const likedTracks = [...recommendedTracks.items];
 
-      const likedTracks = [];
       // Get brani piaciuti
       for (let i = 0; i < 5; i++) {
         const tempTracks = await fetchWebApi(
@@ -102,11 +99,13 @@ function CreatePlaylistPage() {
         );
         likedTracks.push(...tempTracks.items.map(i => i.track));
       }
+      console.log(likedTracks);
 
       if (!likedTracks) {
         console.log(
           "Errore durante il recupero dei brani raccomandati e piaciuti."
         );
+        alert("Errore");
         return;
       }
 
@@ -175,10 +174,11 @@ function CreatePlaylistPage() {
         }
       );
 
+      const uniqueTracks = [...new Set(filteredTracksUri)]; //rimuovo gli artisti duplicati
       // Aggiungi le tracce filtrate alla playlist
       // PUÒ CONTENERE MASSIMO 100 TRACCE
       await fetchWebApi(`v1/playlists/${playlist.id}/tracks`, "POST", {
-        uris: filteredTracksUri.slice(0, 90),
+        uris: uniqueTracks.slice(0, 90),
         position: 0
       });
 
