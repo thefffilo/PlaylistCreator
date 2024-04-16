@@ -24,18 +24,22 @@ function CreatePlaylistPage() {
   const [playlistId, setPlaylistId] = useState("");
 
   const handleSend = async () => {
-    try {
-      const response = await apiClient.post("genres", { text });
-      if (
-        response.ok &&
-        response.data.genres &&
-        Array.isArray(response.data.genres)
-      ) {
-        setGenresFound(response.data.genres);
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(window.location.href.split(".com")[0] + ".com/genres");
+
+    fetch(window.location.href.split(".com")[0] + ".com/genres", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text })
+    })
+      .then(response => response.json()) // Converte la risposta in JSON
+      .then(data => {
+        setGenresFound(data.text.split(" "));
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
   };
 
   const handleReset = () => {
