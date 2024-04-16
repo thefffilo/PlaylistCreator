@@ -66,7 +66,7 @@ function CreatePlaylistPage() {
       const likedTracks = [...recommendedTracks.items];
 
       // Get brani piaciuti
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 10; i++) {
         const tempTracks = await fetchWebApi(
           `v1/me/tracks?market=IT&limit=${50}&offset=${50 * i}`,
           "GET"
