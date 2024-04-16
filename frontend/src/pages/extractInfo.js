@@ -19,7 +19,7 @@ const ExtractInfo = () => {
     if (selectedFile) {
       const formData = new FormData();
       formData.append("audio", selectedFile);
-      fetch("URL_dell_API", {
+      fetch("/uploadSong", {
         method: "POST",
         body: formData
       })
