@@ -21,6 +21,8 @@ function CreatePlaylistPage() {
   const [text, setText] = useState("");
   const [genresFound, setGenresFound] = useState([]);
 
+  const [playlistId, setPlaylistId] = useState("");
+
   const handleSend = async () => {
     try {
       const response = await apiClient.post("/genres", { text });
@@ -141,7 +143,6 @@ function CreatePlaylistPage() {
           public: false
         }
       );
-
       const uniqueTracks = [...new Set(filteredTracksUri)]; //rimuovo gli artisti duplicati
       // Aggiungi le tracce filtrate alla playlist
       // PUÒ CONTENERE MASSIMO 100 TRACCE
@@ -149,6 +150,9 @@ function CreatePlaylistPage() {
         uris: uniqueTracks.slice(0, 90),
         position: 0
       });
+      setTimeout(() => {
+        setPlaylistId(playlist.id);
+      }, 2000);
 
       console.log("Playlist creata con successo.");
     } catch (error) {
@@ -224,6 +228,16 @@ function CreatePlaylistPage() {
             {t("createPlaylist.createPlaylist")}
           </button>
         </div>
+      )}
+      {playlistId && (
+        <iframe
+          src={`https://open.spotify.com/embed/playlist/${playlistId}?theme=black&show_tracklist=true`}
+          width="300"
+          height="380"
+          frameBorder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        ></iframe>
       )}
     </div>
   );
