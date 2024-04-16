@@ -25,7 +25,7 @@ function CreatePlaylistPage() {
 
   const handleSend = async () => {
     try {
-      const response = await apiClient.post("/genres", { text });
+      const response = await apiClient.post("genres", { text });
       if (
         response.ok &&
         response.data.genres &&
