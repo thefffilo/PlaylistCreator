@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 const ExtractInfo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [genre, setGenre]= useState("")
   const { t } = useTranslation();
 
   const handleFileChange = event => {
@@ -26,7 +27,6 @@ const ExtractInfo = () => {
         .then(response => response.json())
         .then(data => {
           console.log("Risposta dall'API:", data);
-          setSelectedFile(null);
         })
         .catch(error => {
           console.error("Errore durante l'upload:", error);
