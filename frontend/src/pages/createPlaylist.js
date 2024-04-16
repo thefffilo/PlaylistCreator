@@ -19,22 +19,18 @@ function CreatePlaylistPage() {
   const [spuser, setSpuser] = useState({});
   const { t } = useTranslation();
   const [text, setText] = useState("");
-  const [genresFound, setGenresFound] = useState([
-    "house",
-    "tech house",
-    "edm"
-  ]);
+  const [genresFound, setGenresFound] = useState([]);
 
   const handleSend = async () => {
     try {
-      // const response = await apiClient.post("/genres", { text });
-      // if (
-      //   response.ok &&
-      //   response.data.genres &&
-      //   Array.isArray(response.data.genres)
-      // ) {
-      //   setGenresFound(response.data.genres);
-      // }
+      const response = await apiClient.post("/genres", { text });
+      if (
+        response.ok &&
+        response.data.genres &&
+        Array.isArray(response.data.genres)
+      ) {
+        setGenresFound(response.data.genres);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -50,34 +46,6 @@ function CreatePlaylistPage() {
     updatedGenres.splice(genreIndex, 1);
     setGenresFound(updatedGenres);
   };
-
-  // const handleCreatePlaylist = async () => {
-  //   const topTracks = await fetchWebApi(
-  //     "v1/me/top/tracks?time_range=long_term&limit=25",
-  //     "GET"
-  //   );
-
-  //   if (!topTracks.items) {
-  //     return;
-  //   }
-
-  //   const tracksUri = topTracks.items.map(track => track.uri);
-
-  //   const playlist = await fetchWebApi(
-  //     `v1/users/${spuser.id}/playlists`,
-  //     "POST",
-  //     {
-  //       name: "Playlist Creator",
-  //       description: "Playlist creata da Playlist Creator. :)",
-  //       public: false
-  //     }
-  //   );
-
-  //   await fetchWebApi(
-  //     `v1/playlists/${playlist.id}/tracks?uris=${tracksUri.join(",")}`,
-  //     "POST"
-  //   );
-  // };
 
   const handleCreatePlaylist = async () => {
     try {
