@@ -62,7 +62,11 @@ const ExtractInfo = () => {
       >
         {t("extractInfo.confirm")}
       </button>
-      {genre && <t1>{genre}</t1>}
+      {genre && (
+        <div>
+          <t1>{genre}</t1>
+        </div>
+      )}
     </div>
   );
 };
