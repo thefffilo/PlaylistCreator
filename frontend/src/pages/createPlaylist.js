@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../api/axios";
 import { useTranslation } from "react-i18next";
+import "./createPlaylist.css";
 
 async function fetchWebApi(endpoint, method, body) {
   const token = sessionStorage.getItem("token");
@@ -181,41 +182,33 @@ function CreatePlaylistPage() {
   }, []);
 
   return (
-    <div style={{ padding: "20px", maxWidth: "500px", margin: "auto" }}>
+    <div className="playlist-container">
       <textarea
         value={text}
         onChange={e => setText(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          margin: "10px 0",
-          boxSizing: "border-box"
-        }}
+        className="text-input"
         rows="4"
         placeholder={t("createPlaylist.insertYourTextHere")}
       />
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <button
-          onClick={handleReset}
-          style={{ padding: "10px 20px", cursor: "pointer" }}
-        >
+      <div className="button-container">
+        <button onClick={handleReset} className="reset-button">
           {t("createPlaylist.reset")}
         </button>
-        <button
-          onClick={handleSend}
-          style={{ padding: "10px 20px", cursor: "pointer" }}
-        >
+        <button onClick={handleSend} className="send-button">
           {t("createPlaylist.send")}
         </button>
       </div>
       {genresFound.length > 0 && (
-        <div>
+        <div className="genre-list-container">
           <p>{t("createPlaylist.foundGenres")}:</p>
-          <ul style={{ listStyle: "none", padding: 0 }}>
+          <ul className="genre-list">
             {genresFound.map((genre, index) => (
-              <li key={index} style={{ marginBottom: "5px" }}>
-                <span style={{ marginRight: "10px" }}>{genre}</span>
-                <button onClick={() => handleRemoveGenre(index)}>
+              <li key={index} className="genre-item">
+                <span className="genre-name">{genre}</span>
+                <button
+                  onClick={() => handleRemoveGenre(index)}
+                  className="remove-genre-button"
+                >
                   {t("createPlaylist.remove")}
                 </button>
               </li>
@@ -223,11 +216,7 @@ function CreatePlaylistPage() {
           </ul>
           <button
             onClick={handleCreatePlaylist}
-            style={{
-              padding: "10px 20px",
-              cursor: "pointer",
-              marginTop: "10px"
-            }}
+            className="create-playlist-button"
           >
             {t("createPlaylist.createPlaylist")}
           </button>
@@ -236,11 +225,7 @@ function CreatePlaylistPage() {
       {playlistId && (
         <iframe
           src={`https://open.spotify.com/embed/playlist/${playlistId}?theme=black&show_tracklist=true`}
-          width="300"
-          height="380"
-          frameBorder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
+          className="playlist-iframe"
         ></iframe>
       )}
     </div>

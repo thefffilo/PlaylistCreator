@@ -49,11 +49,17 @@ function App() {
           <Col>
             <header className="App-header">
               <div className="language-selector">
-                <LanguageSelector className="language-selector" />
+                <LanguageSelector />
               </div>
               <h1>{t("home.welcome")}</h1>
               <div className="box">
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginBottom: "20px"
+                  }}
+                >
                   <span
                     style={{
                       cursor: "pointer",
