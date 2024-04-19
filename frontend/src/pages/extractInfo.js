@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import "./extractInfo.css";
 
 const ExtractInfo = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -38,33 +39,23 @@ const ExtractInfo = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        marginTop: "20px"
-      }}
-    >
-      <input type="file" accept="audio/*" onChange={handleFileChange} />
+    <div className="extract-container">
+      <input
+        type="file"
+        accept="audio/*"
+        className="file-input"
+        onChange={handleFileChange}
+      />
       <button
         onClick={handleUpload}
-        style={{
-          padding: "10px",
-          cursor: "pointer",
-          color: selectedFile ? "black" : "gray",
-          width: "fit-content",
-          margin: "10px auto",
-          border: "1px solid",
-          borderRadius: "5px"
-        }}
+        className={`upload-button ${selectedFile ? "active" : "disabled"}`}
         disabled={!selectedFile}
       >
         {t("extractInfo.confirm")}
       </button>
       {genre && (
-        <div>
-          <t1>{genre}</t1>
+        <div className="genre-display">
+          <p>{genre}</p>
         </div>
       )}
     </div>
