@@ -33,6 +33,15 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const client_id = window.sessionStorage.getItem("client_id");
+
+    if (client_id) {
+      setClient_id(client_id);
+      setInputClient_id(client_id);
+    }
+  }, []);
+
   const logout = () => {
     setToken("");
     window.sessionStorage.clear();
@@ -46,6 +55,7 @@ function App() {
 
   const submitClientId = () => {
     setClient_id(inputClient_id);
+    window.sessionStorage.setItem("client_id", inputClient_id);
   };
 
   return (
