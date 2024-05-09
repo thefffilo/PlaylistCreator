@@ -19,6 +19,7 @@ const ExtractInfo = () => {
 
   const handleUpload = () => {
     if (selectedFile) {
+      setGenre("");
       const formData = new FormData();
       formData.append("audio", selectedFile);
       fetch("/uploadSong", {
