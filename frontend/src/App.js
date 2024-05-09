@@ -7,6 +7,7 @@ import LanguageSelector from "./LanguageSelector";
 import "./App.css";
 
 function App() {
+  // const CLIENT_ID = "08d52968d40a4cb999ddd47d784b5ac5";
   const [client_id, setClient_id] = useState("");
   const [inputClient_id, setInputClient_id] = useState("");
   const REDIRECT_URI = window.location.href;

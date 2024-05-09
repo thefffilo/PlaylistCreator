@@ -16,7 +16,8 @@
 }
 
 .reset-button,
-.send-button {
+.send-button,
+.create-playlist-button {
   padding: 12px 24px;
   margin: 10px;
   cursor: pointer;
@@ -28,7 +29,8 @@
 }
 
 .send-button:hover,
-.reset-button:hover {
+.reset-button:hover,
+.create-playlist-button:hover {
   background-color: #4f98c3;
 }
 
@@ -44,6 +46,9 @@
 .genre-list {
   list-style: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .genre-item {
@@ -61,11 +66,16 @@
 }
 
 .remove-genre-button {
-  background-color: #f44336;
+  background-color: #f34335;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+  padding: 10px 10px 5px 10px;
 }
 
 .remove-genre-button:hover {
-  background-color: #c33c29;
+  background-color: darkred;
 }
 
 .playlist-iframe {

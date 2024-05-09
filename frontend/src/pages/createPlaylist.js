@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../api/axios";
+import { TrashFill } from "react-bootstrap-icons";
 import { useTranslation } from "react-i18next";
 import "./createPlaylist.css";
 
@@ -200,7 +201,7 @@ function CreatePlaylistPage() {
       </div>
       {genresFound.length > 0 && (
         <div className="genre-list-container">
-          <p>{t("createPlaylist.foundGenres")}:</p>
+          <p>{t("createPlaylist.foundGenres")}</p>
           <ul className="genre-list">
             {genresFound.map((genre, index) => (
               <li key={index} className="genre-item">
@@ -209,7 +210,7 @@ function CreatePlaylistPage() {
                   onClick={() => handleRemoveGenre(index)}
                   className="remove-genre-button"
                 >
-                  {t("createPlaylist.remove")}
+                  <TrashFill />
                 </button>
               </li>
             ))}
@@ -222,6 +223,7 @@ function CreatePlaylistPage() {
           </button>
         </div>
       )}
+
       {playlistId && (
         <iframe
           src={`https://open.spotify.com/embed/playlist/${playlistId}?theme=black&show_tracklist=true`}
